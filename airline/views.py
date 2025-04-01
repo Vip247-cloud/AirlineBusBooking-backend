@@ -80,9 +80,10 @@ class CombinedTravelOptionsView(APIView):
         flights = Flight.objects.filter(origin__iexact=origin, destination__iexact=destination)
         flight_data = FlightSerializer(flights, many=True).data
 
-        # Buses from classmate's API
+        # Buses from Lambda-based FastAPI
         try:
-            bus_api_url = f"http://127.0.0.1:8002/api/routes/?from={origin}&to={destination}"
+            # ✅ FIXED: change query param names to from_city and to_city
+            bus_api_url = f"https://m97ksfo27c.execute-api.eu-west-1.amazonaws.com/lyuble/bus/search?from_city={origin}&to_city={destination}"
             bus_response = requests.get(bus_api_url)
             bus_data = bus_response.json()
         except Exception as e:
@@ -94,3 +95,4 @@ class CombinedTravelOptionsView(APIView):
             'flights': flight_data,
             'buses': bus_data
         })
+

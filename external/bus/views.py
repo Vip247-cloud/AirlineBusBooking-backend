@@ -12,7 +12,7 @@ class BusRouteView(APIView):
             return Response({'error': 'from and to parameters are required'}, status=400)
 
         try:
-            external_url = f"http://127.0.0.1:8002/api/routes/?from={from_city}&to={to_city}"  # Replace with classmate’s actual URL if deployed
+            external_url = f"https://m97ksfo27c.execute-api.eu-west-1.amazonaws.com/lyuble/bus/search?from={from_city}&to={to_city}"  # Replace with classmate’s actual URL if deployed
             response = requests.get(external_url)
             data = response.json()
             return Response(data)
